@@ -1,34 +1,36 @@
-#!/usr/bin/env python3
-"""news-image-20261120: one image summing up the world news of
-Friday 20 November 2026.
+# news-image-20261120 entry: copy entry.png to the output directory.
+#
+# Pure Python standard library (os/shutil/pathlib only). The judging
+# container has no Pillow, no network, and a read-only /bot, so this
+# program only copies the already-rendered image byte for byte.
+#
+# Run it the way the grader does:
+#   MAKEFUN_BOT_DIR=. MAKEFUN_OUTPUT_DIR=out python3 main.py
 
-The image (entry.png) was drawn by renderer.py from stories.json: 50
-stories, every one verified to have happened or been first reported on
-20 November 2026, across 7 regions and 14 topics. Layout: giant date,
-UTC timeline, 16 featured stories with flat vector pictograms, a world
-map with numbered pins, an ALSO ON list, a DATE CHECK bar naming the
-tempting wrong-date stories left out on purpose, and a footer.
-
-This program is pure standard library: it only copies the finished
-image to /output/entry.png, so it runs in the judging container, which
-has nothing installed beyond the standard library. Deterministic: the
-same entry.png is copied every run, byte for byte.
-"""
 import os
 import shutil
+import sys
 from pathlib import Path
 
-HERE = Path(__file__).resolve().parent
+BOT_DIR = Path(os.environ.get("MAKEFUN_BOT_DIR", "/bot"))
+OUTPUT_DIR = Path(os.environ.get("MAKEFUN_OUTPUT_DIR", "/output"))
 
 
-def main():
-    out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR") or "/output"
-    if Path(out_dir).is_dir():
-        out = Path(out_dir) / "entry.png"
-    else:
-        out = HERE / "out" / "entry.png"
-    out.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copyfile(HERE / "entry.png", out)
+def _copy_to(destination: Path, source: Path) -> None:
+    destination.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(source, destination / "entry.png")
+
+
+def main() -> int:
+    source = BOT_DIR / "entry.png"
+    if not source.is_file():
+        print(f"entry.png not found in {BOT_DIR}", file=sys.stderr)
+        return 1
+    try:
+        _copy_to(OUTPUT_DIR, source)
+    except OSError:
+        # The output directory is not writable here; use out/ instead.
+        _copy_to(Path("out"), source)
     return 0
 
 

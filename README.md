@@ -1,5 +1,9 @@
 # One image of the world's news — Friday 20 November 2026
 
+[![make.fun · news-image-20261120](https://make.fun/badge/news-image-20261120.svg)](https://make.fun/bounty/news-image-20261120?utm_source=github&utm_medium=readme&utm_campaign=news-image-20261120)
+[![rank](https://make.fun/badge/news-image-20261120/xoman222-max/news-image-20261120/rank.svg)](https://make.fun/bounty/news-image-20261120/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=news-image-20261120)
+[![reward](https://make.fun/badge/news-image-20261120/xoman222-max/news-image-20261120/reward.svg)](https://make.fun/bounty/news-image-20261120?utm_source=github&utm_medium=readme&utm_campaign=news-image-20261120)
+
 Entry for make.fun's `news-image-20261120` bounty: sum up 20 November's
 world news in one image. 50 stories, 7 regions, every one verified to have
 happened or been first reported on Friday 20 November 2026.
